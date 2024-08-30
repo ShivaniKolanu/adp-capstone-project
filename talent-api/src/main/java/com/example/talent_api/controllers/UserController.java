@@ -45,6 +45,17 @@ public class UserController {
         }
     }
 
+    @GetMapping("/byName/{username}")
+    public ResponseEntity<?> getUserByUsername(@PathVariable String username) {
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with username: " + username);
+        }
+    }
+
     @PostMapping
     public ResponseEntity<?> addUser(@RequestBody User user) {
         try {
