@@ -1,16 +1,18 @@
 import React from "react";
+import '../styles/footer.css';
 
-export function Footer(){
-    return(
-        <div>
-            <footer class="bg-body-tertiary text-center text-lg-start">
-                <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
-                    © 2024 Copyright:
-                    <a class="text-body" href="https://localhost:5173/">HireVista.com</a>
-                </div>
-            </footer>
-        </div>
+export default function Footer(){
+    return (
+
+        <footer class="footer" style={{position: 'absolute', bottom: '0',marginTop: '100px'}}>
+            <div class="waves">
+                <div class="wave" id="wave1"></div>
+                <div class="wave" id="wave2"></div>
+
+            </div>
+            <p>&copy;Isabella + Shivani | All Rights Reserved</p>
+        </footer>
     );
 };
 
-export default Footer;
+// export default Footer;
