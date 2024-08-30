@@ -1,6 +1,6 @@
 .navbar {
     display: flex;
-    justify-content: flex-start; /* Change to flex-start */
+    /* justify-content: flex-start; Change to flex-start */
     align-items: center;
     padding: 1rem;
     background-color: #f0f0f0;
@@ -11,8 +11,9 @@
   }
   
   .company-name {
-    font-size: 1.2rem;
+    font-size: 2.2rem;
     font-weight: bold;
+    font-family:'Courier New', Courier, monospace;
   }
   
   .navbar-list {
@@ -37,4 +38,13 @@
     margin-right: 20px;
   
   }
+
+ul li a {
+  text-decoration: none;
+  border: violet;
+  background-color:#655050;
+  color: #f0f0f0;
+  padding: 7px;
+  border-radius: 8px;
+}
 
