@@ -1,0 +1,40 @@
+.navbar {
+    display: flex;
+    justify-content: flex-start; /* Change to flex-start */
+    align-items: center;
+    padding: 1rem;
+    background-color: #f0f0f0;
+  }
+  
+  .logo {
+    margin-right: 1rem;
+  }
+  
+  .company-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .navbar-list {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    margin-left: 0;
+  }
+  
+  .navbar-item {
+    font-weight: bold;
+    position:absolute;
+  }
+
+  .ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+  }
+  
+  .li {
+    margin-right: 20px;
+  
+  }
+
