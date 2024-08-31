@@ -47,14 +47,14 @@ export default function LoginComponent() {
         </div>
 
         <div className="container" style={{ float: 'right', marginLeft: 200, backgroundColor: '#f2f2f2', borderRadius: 6, maxWidth: 500 }}>
-          <p style={{ fontSize: 30, fontFamily: 'sans-serif' }}> Sign in with
+          <p style={{ fontSize: 30, fontFamily: 'sans-serif', textAlign: 'center' }}> Sign in with
             <i className="fab fa-google" style={{ fontSize: 30, marginLeft: 20, padding: 10 }}></i>
             <i className='fab fa-twitter' style={{ fontSize: 30, padding: 10 }}></i>
             <i className='fab fa-linkedin' style={{ fontSize: 30, padding: 10 }}></i>
           </p>
           <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0' }}>
             <hr style={{ flex: 1, border: 'none', borderTop: '1px solid #000' }} />
-            <span style={{ padding: '0 10px', color: '#000', fontWeight: 'bold' }}>Or</span>
+            <span style={{ padding: '0 10px', color: '#000', fontWeight: 'bold' }}>OR</span>
             <hr style={{ flex: 1, border: 'none', borderTop: '1px solid #000' }} />
           </div>
 
