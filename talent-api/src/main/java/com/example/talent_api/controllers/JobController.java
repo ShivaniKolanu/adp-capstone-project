@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.talent_api.Job;
-import com.example.talent_api.Manager;
+import com.example.talent_api.entities.Job;
+import com.example.talent_api.entities.Manager;
 import com.example.talent_api.repositories.JobRepository;
 
 @RestController
