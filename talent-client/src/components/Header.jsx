@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import '../styles/header.css';
+import { searchJobs } from "../services/apiService";
+
 export default function Header() {
 
   const [searchJobParam, setSearchJobParam] = useState('');
@@ -38,6 +40,20 @@ export default function Header() {
 
   }
 
+  async function handleSearchJobs() {
+    try {
+      const isSuccess = await searchJobs(searchJobParam);
+      if (isSuccess) {
+        // Handle successful login
+      }
+    } catch (err) {
+      console.error('Error searching jobs:', error);
+    }
+    finally {
+      setIsSearchComplete(true);
+    }
+  }
+
   function searchJobsClose() {
     setSearchJobParam('');
     setJobs([]);
@@ -69,7 +85,7 @@ export default function Header() {
               <div className="modal-body" >
                 <input type="text" name="searchJobParam" onChange={(e) => setSearchJobParam(e.target.value)} className="form-control" placeholder="Search for a job title.." />
                 <br />
-                <button type="button" onClick={() => searchJobs()} className="btn btn-primary">Search</button>
+                <button type="button" onClick={() => handleSearchJobs()} className="btn btn-primary">Search</button>
                 <br />
                 <div className="job-cards-container" style={{ maxHeight: "45vh", overflowY: "auto", overflowX: "hidden", marginTop: 10 }}>
                   {isSearchComplete && jobs.length === 0 ? (

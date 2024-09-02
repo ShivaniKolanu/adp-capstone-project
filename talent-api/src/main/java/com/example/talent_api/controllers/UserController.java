@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.talent_api.User;
+import com.example.talent_api.entities.User;
 import com.example.talent_api.repositories.UserRepository;
 
 @RestController

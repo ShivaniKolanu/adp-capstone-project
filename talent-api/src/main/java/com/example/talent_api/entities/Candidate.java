@@ -1,4 +1,4 @@
-package com.example.talent_api;
+package com.example.talent_api.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -6,24 +6,25 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Manager {
-
+public class Candidate {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long manager_id;
-   
+    private Long candidate_id;
+
     private Long user_id;
     private String full_name;
     private String email;
-    private String department;
+    private String address;
     private String phone;
+    private String resume;
 
-    public Long getManagerId() {
-        return manager_id;
+    public Long getCandidateId() {
+        return candidate_id;
     }
 
-    public void setManagerId(Long manager_id) {
-        this.manager_id = manager_id;
+    public void setCandidateId(Long candidate_id) {
+        this.candidate_id = candidate_id;
     }
 
     public Long getUserId() {
@@ -50,6 +51,14 @@ public class Manager {
         this.email = email;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getPhone() {
         return phone;
     }
@@ -58,13 +67,19 @@ public class Manager {
         this.phone = phone;
     }
 
-    public String getDepartment() {
-        return department;
+    public String getResume() {
+        return resume;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setResume(String resume) {
+        this.resume = resume;
     }
+
+
+
+
+
+
 
 
 }
