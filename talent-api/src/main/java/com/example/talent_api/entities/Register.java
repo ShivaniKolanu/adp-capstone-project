@@ -1,5 +1,7 @@
 package com.example.talent_api.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +15,10 @@ public class Register {
     private Long user_id;
     private Long candidate_id;
     private String role;
+
+    @JsonProperty("full_name")
     private String full_name;
+    
     private String email;
     private String address;
     private String phone;

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import '../styles/header.css';
 import { searchJobs } from "../services/apiService";
+import icon from '../assets/icon.png'
 
 export default function Header() {
 
@@ -65,7 +66,10 @@ export default function Header() {
   return (
     <>
       <nav className="navbar">
+        <div className="title-logo" style={{display: "flex"}}>
+        <img src={icon} style={{width: 100, height: 50}}/>
         <h1 className="company-name">HireVista</h1>
+        </div>
         <ul className="navbar-list">
           {/* <li className="about"><a href="/about">About</a></li>
           <li className="profile"><a href="/profile">Profile</a></li> */}

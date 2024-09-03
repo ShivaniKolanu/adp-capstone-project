@@ -1,5 +1,7 @@
 package com.example.talent_api.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +15,11 @@ public class Manager {
     private Long manager_id;
    
     private Long user_id;
+
+    @JsonProperty("full_name")
     private String full_name;
+
+    
     private String email;
     private String department;
     private String phone;
