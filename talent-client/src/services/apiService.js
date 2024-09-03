@@ -1,5 +1,5 @@
 // services/apiService.js
-export async function validateLogin(username, password) {
+export async function validateLogin(username, password, res) {
     try {
         const response = await fetch(`http://localhost:8080/api/users/byName/${username}`);
 
@@ -7,15 +7,28 @@ export async function validateLogin(username, password) {
             const userData = await response.json();
             if (userData.password === password) {
                 console.log("Login Successful");
-                return userData;
+                // return userData;
+                return {
+                    statusCode: 200,
+                    message: `Successful`,
+                    data: userData,
+                };
             } else {
                 console.log("Incorrect password");
-                alert("Incorrect password!");
-                return null;
+                // alert("Incorrect password!");
+                return {
+                    statusCode: 401,
+                    message: 'Incorrect Password',
+                    data: null,
+                };
             }
         } else {
             console.log(`User not found with username: ${username}`);
-            return null;
+            return {
+                statusCode: 404,
+                message: 'User not found with given username',
+                data: null,
+            };
         }
     } catch (err) {
         console.error("An error occurred while trying to log in.", err);

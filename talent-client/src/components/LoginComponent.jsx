@@ -10,6 +10,9 @@ export default function LoginComponent(props) {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [userFlag, setUserFlag] = useState(false);
+  const [passwordFlag, setPasswordFlag] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
 
   const navigate = useNavigate();
 
@@ -21,23 +24,31 @@ export default function LoginComponent(props) {
   async function handleLogin() {
     try {
       const user = await validateLogin(username, password);
-      if (user) {
-        if (user.type === 'manager') {
+      if (user.statusCode === 200) {
+        setPasswordFlag(false);
+        setUserFlag(false);
+        if (user.data.type === 'manager') {
           navigate('/managerDashboard');
-        } else if (user.type === 'candidate') {
+        } else if (user.data.type === 'candidate') {
           navigate('/candidateDashboard'); // Assuming you have this route for candidates
         } else {
           console.error("Unknown role:", user.type);
-          alert("Unknown role, cannot navigate.");
         }
+      } else if(user.statusCode === 404){
+        console.error(`User not found with username: ${username}`);
+        setUserFlag(true);
+        setErrorMessage("User is not found with given username.")
+      }
+      else{
+        console.log("Incorrect password");
+        setPasswordFlag(true);
+        setErrorMessage("Incorrect Password.")
       }
     } catch (err) {
       console.error(err);
       alert("An error occurred while trying to log in.");
     }
   }
-
-
 
   function registerClick() {
 
@@ -49,7 +60,17 @@ export default function LoginComponent(props) {
 
   return (
     <>
-
+      {
+        userFlag && 
+          <div class="alert alert-danger" role="alert">
+            {errorMessage}
+          </div>
+      }
+      { passwordFlag && 
+          <div class="alert alert-danger" role="alert">
+            {errorMessage}
+          </div>
+      }
       <p style={{ fontSize: 30, fontFamily: 'sans-serif', textAlign: 'center' }}> Sign in with
         <i className="fab fa-google" style={{ fontSize: 30, marginLeft: 20, padding: 10 }}></i>
         <i className='fab fa-twitter' style={{ fontSize: 30, padding: 10 }}></i>
@@ -71,9 +92,9 @@ export default function LoginComponent(props) {
       </div>
 
       <button type="button" onClick={() => handleLogin()} className="btn btn-primary" style={{ marginBottom: 10 }}>Login</button>
+      
       <p>New Customer? Register here.
         <button type="button" onClick={() => registerClick()} className="btn btn-secondary" style={{ marginBottom: 10, padding: 3, marginLeft: 10 }}>Register</button>
-
       </p>
     </>
   );
