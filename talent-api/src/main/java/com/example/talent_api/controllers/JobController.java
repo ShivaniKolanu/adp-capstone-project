@@ -1,8 +1,6 @@
 package com.example.talent_api.controllers;
-
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.talent_api.entities.Job;
-import com.example.talent_api.entities.Manager;
 import com.example.talent_api.repositories.JobRepository;
 
 @RestController
@@ -48,7 +44,7 @@ public class JobController {
         }
     }
 
-    @GetMapping("/{manager_id}")
+    @GetMapping("/byManagerId/{manager_id}")
     public ResponseEntity<?> getJobByManagerId(@PathVariable Long manager_id) {
         Optional<Job> jobOptional = jobRepository.findByManagerId(manager_id);
 
