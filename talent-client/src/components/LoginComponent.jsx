@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import talent from '../assets/talent1-removebg-preview.png';
 import RegisterComponent from "./RegisterComponent";
 import { validateLogin } from "../services/apiService";
+import { useNavigate } from "react-router-dom";
 
 
 export default function LoginComponent(props) {
@@ -10,15 +11,25 @@ export default function LoginComponent(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const navigate = useNavigate();
+
+
   useEffect(() => {
 
   });
 
   async function handleLogin() {
     try {
-      const isSuccess = await validateLogin(username, password);
-      if (isSuccess) {
-        // Handle successful login
+      const user = await validateLogin(username, password);
+      if (user) {
+        if (user.type === 'manager') {
+          navigate('/managerDashboard');
+        } else if (user.type === 'candidate') {
+          navigate('/candidateDashboard'); // Assuming you have this route for candidates
+        } else {
+          console.error("Unknown role:", user.type);
+          alert("Unknown role, cannot navigate.");
+        }
       }
     } catch (err) {
       console.error(err);
@@ -26,7 +37,7 @@ export default function LoginComponent(props) {
     }
   }
 
-  
+
 
   function registerClick() {
 
