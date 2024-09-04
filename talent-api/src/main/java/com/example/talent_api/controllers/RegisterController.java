@@ -14,15 +14,15 @@ import com.example.talent_api.entities.Register;
 import com.example.talent_api.entities.User;
 import com.example.talent_api.repositories.CandidateRepository;
 import com.example.talent_api.repositories.ManagerRepository;
-import com.example.talent_api.repositories.RegisterRepository;
+// import com.example.talent_api.repositories.RegisterRepository;
 import com.example.talent_api.repositories.UserRepository;
 
 @RestController
 @RequestMapping("/api/registration")
 public class RegisterController {
 
-    @Autowired
-    private RegisterRepository registerRepository;
+    // @Autowired
+    // private RegisterRepository registerRepository;
 
     @Autowired
     private CandidateRepository candidateRepository;

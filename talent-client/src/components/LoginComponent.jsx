@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import talent from '../assets/talent1-removebg-preview.png';
 import RegisterComponent from "./RegisterComponent";
 import { validateLogin } from "../services/apiService";
 import { useNavigate } from "react-router-dom";
-
-
+import { GlobalUserContext } from "../App";
 export default function LoginComponent(props) {
-
-
+  
+  const {globalUser,setGlobalUser} = useContext(GlobalUserContext)
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [userFlag, setUserFlag] = useState(false);
@@ -25,6 +24,7 @@ export default function LoginComponent(props) {
     try {
       const user = await validateLogin(username, password);
       if (user.statusCode === 200) {
+        setGlobalUser(user);
         setPasswordFlag(false);
         setUserFlag(false);
         if (user.data.type === 'manager') {
@@ -63,12 +63,10 @@ export default function LoginComponent(props) {
       {
         userFlag && 
           <div class="alert alert-danger" role="alert">
-            {errorMessage}
           </div>
       }
       { passwordFlag && 
           <div class="alert alert-danger" role="alert">
-            {errorMessage}
           </div>
       }
       <p style={{ fontSize: 30, fontFamily: 'sans-serif', textAlign: 'center' }}> Sign in with

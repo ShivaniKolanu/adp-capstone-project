@@ -2,6 +2,7 @@ package com.example.talent_api.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +14,8 @@ public class Manager {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long manager_id;
-   
+    
+    @Column(name = "user_id")
     private Long user_id;
 
     @JsonProperty("full_name")

@@ -5,6 +5,8 @@ import RegisterComponent from '../components/RegisterComponent';
 export function HomePage() {
 
     const [isRegister, setRegister] = useState(false);
+    // const [globalUserId, setGlobalUserId] = useState('');
+    // const [globalUserRole, setGlobalUserRole] = useState('');
     return (
         <>
 
