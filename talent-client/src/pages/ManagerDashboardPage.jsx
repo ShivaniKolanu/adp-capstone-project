@@ -10,6 +10,7 @@ export default function ManagerDashboardPage() {
     const { globalUser } = useContext(GlobalUserContext);
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
+    
 
     const fetchJobs = async () => {
         if (globalUser && globalUser.data && globalUser.data.managerId) {

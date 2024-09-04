@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { updateJobListing } from '../services/apiService';
+import { updateJobListing, updateApplicationStatus } from '../services/apiService';
 import '../styles/DataTable.css';
 
 export default function DataTableManager(props) {
@@ -14,6 +14,35 @@ export default function DataTableManager(props) {
     const handleStatusChange = (event) => {
         setSelectedJob({ ...selectedJob, listingstatus: event.target.value });
     };
+
+    const handleApplicationStatusChange = async (applicantId, newStatus) => {
+        const response = await updateApplicationStatus(applicantId, newStatus);
+        setUpdateMessage(response.message || "An error occurred while updating the application status.");
+
+        if (response.statusCode === 200) {
+            setSuccessAlert(true);
+            const updatedJobs = jobs.map(job => {
+                if (job.jobId === selectedJob.jobId) {
+                    return {
+                        ...job,
+                        applications: job.applications.map(application =>
+                            application.applicationId === applicantId
+                                ? { ...application, applicationStatus: newStatus }
+                                : application
+                        )
+                    };
+                }
+                return job;
+            });
+
+            // Update the state with the updated jobs
+            onJobsUpdate(updatedJobs);
+
+            // Optionally, update the selected job's applications for the modal
+            setSelectedApplications(updatedJobs.find(job => job.jobId === selectedJob.jobId).applications);  // You might want to refresh the job list to reflect the updated application status
+        }
+    };
+
 
     const handleShow = (job) => {
         setSuccessAlert(false);
@@ -211,6 +240,7 @@ export default function DataTableManager(props) {
                                                                     name="role"
                                                                     className="form-select"
                                                                     value={application.applicationStatus}
+                                                                    onChange={(e) => handleApplicationStatusChange(application.applicationId, e.target.value)}
                                                                     style={{ width: 150 }}
                                                                 >
                                                                     <option value="select">Select an option</option>
