@@ -1,4 +1,5 @@
 package com.example.talent_api.controllers;
+
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +24,13 @@ public class ApplicationController {
     @Autowired
     private ApplicationRepository ApplicationRepository;
 
-    @Autowired 
+    @Autowired
     private AppsAndJobsRepository appsAndJobsRepository;
 
     @GetMapping
     public ResponseEntity<?> getAllApplications() {
         List<Application> application = ApplicationRepository.findAll();
-        if(application.isEmpty()){
+        if (application.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No applications found.");
         }
         return ResponseEntity.ok(application);
@@ -48,27 +49,49 @@ public class ApplicationController {
     }
 
     // @GetMapping("/{manager_id}")
-    // public ResponseEntity<?> getApplicationByManagerId(@PathVariable Long manager_id) {
-    //     Optional<Application> applicationOptional = ApplicationRepository.findByManagerId(manager_id);
+    // public ResponseEntity<?> getApplicationByManagerId(@PathVariable Long
+    // manager_id) {
+    // Optional<Application> applicationOptional =
+    // ApplicationRepository.findByManagerId(manager_id);
 
-    //     if (applicationOptional.isPresent()) {
-    //         Application application = applicationOptional.get();
-    //         return ResponseEntity.ok(application);
-    //     } else {
-    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Application not found with manager id: " + manager_id);
-    //     }
+    // if (applicationOptional.isPresent()) {
+    // Application application = applicationOptional.get();
+    // return ResponseEntity.ok(application);
+    // } else {
+    // return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Application not
+    // found with manager id: " + manager_id);
     // }
-    
+    // }
+
     // @GetMapping("/byJobId/{jobId}")
     // public ResponseEntity<?> getApplicationsByJobId(@PathVariable Long jobId) {
-    //     List<AppsAndJobs> applicationOptional = appsAndJobsRepository.findApplicationsByJobId(jobId);
+    // List<AppsAndJobs> applicationOptional =
+    // appsAndJobsRepository.findApplicationsByJobId(jobId);
 
-    //     if (!applicationOptional.isEmpty()) {
-    //         return ResponseEntity.ok(applicationOptional);
-    //     } else {
-    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Application not found with job id: " + jobId);
-    //     }
+    // if (!applicationOptional.isEmpty()) {
+    // return ResponseEntity.ok(applicationOptional);
+    // } else {
+    // return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Application not
+    // found with job id: " + jobId);
     // }
+    // }
+
+    @PutMapping("/{application_id}/status")
+    public ResponseEntity<?> updateApplicationStatus(@PathVariable Long application_id,
+            @RequestBody String applicationStatus) {
+        Optional<Application> existingApplicationOptional = ApplicationRepository.findById(application_id);
+
+        if (existingApplicationOptional.isPresent()) {
+            Application existingApplication = existingApplicationOptional.get();
+            existingApplication.setApplicationStatus(applicationStatus);
+            ApplicationRepository.save(existingApplication);
+
+            return ResponseEntity.ok(existingApplication);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Application not found with id: " + application_id);
+        }
+    }
 
     @PostMapping
     public ResponseEntity<?> addApplication(@RequestBody Application application) {
@@ -82,7 +105,8 @@ public class ApplicationController {
     }
 
     @PutMapping("/{application_id}")
-    public ResponseEntity<?> updateApplication(@PathVariable Long application_id, @RequestBody Application updatedApplication) {
+    public ResponseEntity<?> updateApplication(@PathVariable Long application_id,
+            @RequestBody Application updatedApplication) {
         Optional<Application> existingApplicationOptional = ApplicationRepository.findById(application_id);
 
         if (existingApplicationOptional.isPresent()) {
@@ -113,7 +137,7 @@ public class ApplicationController {
             return ResponseEntity.ok("Application deleted successfully.");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("Application not found with id: " + application_id);
+                    .body("Application not found with id: " + application_id);
         }
     }
 }

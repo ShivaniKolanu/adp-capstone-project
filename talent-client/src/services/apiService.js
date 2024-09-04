@@ -227,3 +227,29 @@ export async function getApplicationsByJobID(jobId) {
         console.error("GET request failed: ", error)
     }
 }
+
+
+export async function updateApplicationStatus(applicantId, applicationStatus) {
+    try {
+
+        const updateResponse = await fetch(`http://localhost:8080/api/applications/${applicantId}/status`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: applicationStatus
+        });
+
+        if (!updateResponse.ok) {
+            throw new Error("Failed to Update Application")
+        }
+        return {
+            statusCode: 200,
+            message: 'Application Updated successfully.',
+            data: await updateResponse.json()
+        };
+    } catch (err) {
+        return err.message;
+    }
+
+}
