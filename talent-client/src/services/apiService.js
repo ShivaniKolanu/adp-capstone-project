@@ -134,6 +134,34 @@ export async function getJobsByManagerId(manager_id) {
     
 }
 
+export async function getApplicationsByUserId(user_id) {
+    try {
+        const response = await fetch(`http://localhost:8080/api/applications/byUserId/${user_id}`);
+        const isJson = response.headers.get('content-type')?.includes('application/json');
+        const responseData = isJson ? await response.json() : null;
+
+        if (response.ok) {
+            return {
+                statusCode: 200,
+                message: 'Found Applications.',
+                data: responseData,
+            };
+        } else {
+            return {
+                statusCode: response.status,
+                message: responseData?.message || 'Failed to fetch applications.',
+                data: responseData,
+            };
+        }
+    } catch (err) {
+        return {
+            statusCode: 500,
+            message: `Error: ${err.message}`,
+            data: null,
+        };
+    } 
+    
+}
 
 export async function addNewJobListing(data = {}) {
 

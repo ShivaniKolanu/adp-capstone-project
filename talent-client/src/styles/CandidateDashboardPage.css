@@ -1,0 +1,9 @@
+.candidate-chart {
+    display: flex;
+    justify-content: center;
+}
+
+.candidate-applications-table{
+    display: flex;
+    justify-content: center;
+}

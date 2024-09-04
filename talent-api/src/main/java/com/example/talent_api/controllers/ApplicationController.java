@@ -2,6 +2,7 @@ package com.example.talent_api.controllers;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.example.talent_api.entities.Application;
 import com.example.talent_api.entities.AppsAndJobs;
 import com.example.talent_api.repositories.ApplicationRepository;
@@ -34,6 +36,17 @@ public class ApplicationController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No applications found.");
         }
         return ResponseEntity.ok(application);
+    }
+
+    @GetMapping("/byUserId/{user_id}")
+    public ResponseEntity<?> getApplicationsByUserId(@PathVariable Long user_id) {
+        List<Application> applicationOptional = ApplicationRepository.findApplicationByUserId(user_id);
+
+        if (!applicationOptional.isEmpty()) {
+            return ResponseEntity.ok(applicationOptional);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Application not found with user id: " + user_id);
+        }
     }
 
     @GetMapping("/{application_id}")
