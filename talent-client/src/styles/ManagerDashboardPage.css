@@ -1,0 +1,9 @@
+.manager-chart {
+    display: flex;
+    justify-content: center;
+}
+
+.manager-job-listings-table{
+    display: flex;
+    justify-content: center;
+}

@@ -1,7 +1,7 @@
 // services/apiService.js
 export async function validateLogin(username, password, res) {
     try {
-        const response = await fetch(`http://localhost:8080/api/users/byName/${username}`);
+        const response = await fetch(`http://localhost:8080/api/login/byName/${username}`);
 
         if (response.ok) {
             const userData = await response.json();
@@ -103,9 +103,33 @@ export async function registerNewUser(data = {}) {
         };
     }
 
+}
 
+export async function getJobsByManagerId(manager_id) {
+    try {
+        const response = await fetch(`http://localhost:8080/api/jobs/byManagerId/${manager_id}`);
+        const isJson = response.headers.get('content-type')?.includes('application/json');
+        const responseData = isJson ? await response.json() : null;
 
-
-
-
+        if (response.ok) {
+            return {
+                statusCode: 200,
+                message: 'Found Jobs.',
+                data: responseData,
+            };
+        } else {
+            return {
+                statusCode: response.status,
+                message: responseData?.message || 'Failed to fetch managers',
+                data: responseData,
+            };
+        }
+    } catch (err) {
+        return {
+            statusCode: 500,
+            message: `Error: ${err.message}`,
+            data: null,
+        };
+    } 
+    
 }

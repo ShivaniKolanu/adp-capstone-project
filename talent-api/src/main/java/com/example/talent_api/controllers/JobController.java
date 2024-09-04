@@ -46,11 +46,11 @@ public class JobController {
 
     @GetMapping("/byManagerId/{manager_id}")
     public ResponseEntity<?> getJobByManagerId(@PathVariable Long manager_id) {
-        Optional<Job> jobOptional = jobRepository.findByManagerId(manager_id);
+        List<Job> jobOptional = jobRepository.findByManagerId(manager_id);
 
-        if (jobOptional.isPresent()) {
-            Job job = jobOptional.get();
-            return ResponseEntity.ok(job);
+        if (!jobOptional.isEmpty()) {
+            // Job job = jobOptional.get();
+            return ResponseEntity.ok(jobOptional);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Job not found with manager id: " + manager_id);
         }
