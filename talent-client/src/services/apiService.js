@@ -133,3 +133,97 @@ export async function getJobsByManagerId(manager_id) {
     } 
     
 }
+
+
+export async function addNewJobListing(data = {}) {
+
+    try {
+
+        console.log("Data", data);
+
+        const response = await fetch('http://localhost:8080/api/jobs', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        console.log("Repsonse is", response);
+
+        const isJson = response.headers.get('content-type')?.includes('application/json');
+        const responseData = isJson ? await response.json() : null;
+
+        if (response.ok) {
+            return {
+                statusCode: 201,
+                message: 'Job Listed successfully.',
+                data: responseData,
+            };
+        } else {
+            return {
+                statusCode: response.status,
+                message: responseData?.message || 'Failed to add the job',
+                data: responseData,
+            };
+        }
+    } catch (err) {
+        return {
+            statusCode: 500,
+            message: `Error: ${err.message}`,
+            data: null,
+        };
+    }
+
+}
+
+
+
+export async function updateJobListing(data = {}) {
+    try {
+
+        const jobs_id = data.jobId;
+
+        const updateResponse = await fetch(`http://localhost:8080/api/jobs/${jobs_id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!updateResponse.ok) {
+            throw new Error("Failed to Update Job")
+        }
+        return {
+            statusCode: 200,
+            message: 'Job Updated successfully.',
+            data: await updateResponse.json()
+        };
+    } catch (err) {
+        return err.message;
+    }
+
+}
+
+
+export async function getApplicationsByJobID() {
+    try {
+        const response = await fetch(`localhost:8080/api/applications/byJobId/${jobs_id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application.json'
+            }
+        })
+
+        if (!response.ok) {
+            throw new Error(`HTTP Error : status: ${response.status}`)
+        }
+
+        const data = await response.json();
+        return data;
+
+    } catch (error) {
+        console.error("GET request failed: ", error)
+    }
+}
