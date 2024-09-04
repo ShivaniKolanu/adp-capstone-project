@@ -54,17 +54,16 @@ public class ApplicationController {
     //     }
     // }
     
-    // @GetMapping("/{job_id}")
-    // public ResponseEntity<?> getApplicationsByJobId(@PathVariable Long job_id) {
-    //     Optional<Application> applicationOptional = ApplicationRepository.findApplicationByJobId(job_id);
+    @GetMapping("/byJobId/{job_id}")
+    public ResponseEntity<?> getApplicationsByJobId(@PathVariable Long job_id) {
+        List<Application> applicationOptional = ApplicationRepository.findApplicationByJobId(job_id);
 
-    //     if (applicationOptional.isPresent()) {
-    //         Application application = applicationOptional.get();
-    //         return ResponseEntity.ok(application);
-    //     } else {
-    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Application not found with job id: " + job_id);
-    //     }
-    // }
+        if (!applicationOptional.isEmpty()) {
+            return ResponseEntity.ok(applicationOptional);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Application not found with job id: " + job_id);
+        }
+    }
 
     @PostMapping
     public ResponseEntity<?> addApplication(@RequestBody Application application) {
@@ -84,7 +83,6 @@ public class ApplicationController {
         if (existingApplicationOptional.isPresent()) {
             Application existingApplication = existingApplicationOptional.get();
 
-            existingApplication.setApplicationId(updatedApplication.getApplicationId());
             existingApplication.setUserId(updatedApplication.getUserId());
             existingApplication.setJobId(updatedApplication.getJobId());
             existingApplication.setDateApplied(updatedApplication.getDateApplied());

@@ -4,7 +4,7 @@ import '../styles/DataTable.css';
 export default function DataTableManager(props) {
     const { jobs } = props;
     const [selectedJob, setSelectedJob] = useState(null);
-
+    console.log(jobs);
     const handleStatusChange = (event) => {
         setSelectedJob({ ...selectedJob, listingstatus: event.target.value });
     };
@@ -17,7 +17,7 @@ export default function DataTableManager(props) {
 
     return (
         <>
-            <table className="table table-striped table-bordered" style={{ width: '100%' }}>
+            <table className="table table-striped table-bordered" style={{ width: '100%', marginTop: 10 }}>
                 <thead>
                     <tr>
                         <th scope="col">Department</th>
@@ -42,7 +42,7 @@ export default function DataTableManager(props) {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="5">No jobs to display</td>
+                            <td colSpan="5" style={{textAlign: 'center'}}>No jobs to display</td>
                         </tr>
                     )}
                 </tbody>
@@ -50,7 +50,7 @@ export default function DataTableManager(props) {
 
             {/* Modal */}
             <div className="modal fade" id="jobModal" tabIndex="-1" aria-labelledby="jobModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
+                <div className="modal-dialog modal-lg">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="jobModalLabel">Job Details</h5>
@@ -63,7 +63,7 @@ export default function DataTableManager(props) {
                                     <a className="nav-link active" id="update-tab" data-bs-toggle="tab" href="#update" role="tab" aria-controls="active" aria-selected="true">Update Details</a>
                                 </li>
                                 <li className="nav-item" role="presentation">
-                                    <a className="nav-link" id="inactive-tab" data-bs-toggle="tab" href="#inactive" role="tab" aria-controls="inactive" aria-selected="false">Inactive</a>
+                                    <a className="nav-link" id="inactive-tab" data-bs-toggle="tab" href="#inactive" role="tab" aria-controls="inactive" aria-selected="false">Candidate Applications</a>
                                 </li>
                             </ul>
                             <div className="tab-content" id="jobTabContent">
@@ -91,6 +91,16 @@ export default function DataTableManager(props) {
                                                     <label className="form-label">Date Listed</label>
                                                     <p><strong>{new Date(selectedJob.dateListed).toLocaleDateString()}</strong></p>
                                                 </div>
+                                            </div>
+                                            <div className="mb-3">
+                                                <label className="form-label">Job Description</label>
+                                                <input type = "text"
+                                                    name="jobDescription"
+                                                    value={selectedJob.jobdescription}
+                                                    className="form-control"
+                                                    placeholder="Enter job description.."
+                                                    rows="4"
+                                                />
                                             </div>
                                             <div className="mb-3">
                                                 <label className="form-label">Additional Information</label>
