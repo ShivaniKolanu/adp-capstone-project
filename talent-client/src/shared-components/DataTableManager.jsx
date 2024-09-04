@@ -8,6 +8,9 @@ export default function DataTableManager(props) {
     const [formData, setFormData] = useState({});
     const [updateMessage, setUpdateMessage] = useState("");
     const [successAlert, setSuccessAlert] = useState(false);
+    const [selectedApplications, setSelectedApplications] = useState([]);
+
+
     const handleStatusChange = (event) => {
         setSelectedJob({ ...selectedJob, listingstatus: event.target.value });
     };
@@ -20,6 +23,7 @@ export default function DataTableManager(props) {
             jobId: job.jobId,
             managerId: job.managerId
         });
+        setSelectedApplications(job.applications || []);
         const modal = new window.bootstrap.Modal(document.getElementById('jobModal'));
         modal.show();
     };
@@ -39,7 +43,7 @@ export default function DataTableManager(props) {
         if (response.statusCode === 200) {
             // Close the modal if update was successful
             setSuccessAlert(true);
-            onJobsUpdate(); 
+            onJobsUpdate();
         }
     };
 
@@ -187,7 +191,52 @@ export default function DataTableManager(props) {
                                 </div>
                                 <div className="tab-pane fade" id="inactive" role="tabpanel" aria-labelledby="inactive-tab">
                                     {/* Candidate Applications content */}
-                                    <div class="accordion" id="accordionExample">
+
+                                    {selectedApplications.length > 0 ? (
+                                        <div className="accordion" id="accordionExample">
+                                            {selectedApplications.map((application, index) => (
+                                                <div className="accordion-item" key={index}>
+                                                    <h2 className="accordion-header" id={`heading${index}`}>
+                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse${index}`} aria-expanded="false" aria-controls={`collapse${index}`}>
+                                                            Application {index + 1}
+                                                        </button>
+
+                                                    </h2>
+                                                    <div id={`collapse${index}`} className="accordion-collapse collapse" aria-labelledby={`heading${index}`} data-bs-parent="#accordionExample">
+                                                        <div className="accordion-body">
+                                                            {/* Display application details here */}
+                                                            <p style={{ display: 'flex', alignItems: 'center' }}>
+                                                                <strong style={{ marginRight: '10px' }}>Application Status</strong>
+                                                                <select
+                                                                    name="role"
+                                                                    className="form-select"
+                                                                    value={application.applicationStatus}
+                                                                    style={{ width: 150 }}
+                                                                >
+                                                                    <option value="select">Select an option</option>
+                                                                    <option value="pending">Pending</option>
+                                                                    <option value="reviewed">Reviewed</option>
+                                                                    <option value="accept">Accept</option>
+                                                                    <option value="reject">Reject</option>
+                                                                </select>
+                                                            </p>
+
+                                                            <p><strong>Full Name:</strong> {application.fullname}</p>
+                                                            <p><strong>Email:</strong> {application.email}</p>
+                                                            <p><strong>Cover Letter:</strong> {application.coverLetter}</p>
+                                                            <p><strong>Resume:</strong> {application.resume}</p>
+                                                            <p><strong>Phone:</strong> {application.phone}</p>
+                                                            <p><strong>Application Date:</strong> {new Date(application.applicationDate).toLocaleDateString()}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <div>No applications to display</div>
+                                    )}
+
+                                    {/* <div class="accordion" id="accordionExample">
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="headingOne">
                                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
@@ -224,7 +273,7 @@ export default function DataTableManager(props) {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>

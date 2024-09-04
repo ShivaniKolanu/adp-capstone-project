@@ -13,13 +13,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.talent_api.entities.Application;
+import com.example.talent_api.entities.AppsAndJobs;
 import com.example.talent_api.repositories.ApplicationRepository;
+import com.example.talent_api.repositories.AppsAndJobsRepository;
 
 @RestController
 @RequestMapping("/api/applications")
 public class ApplicationController {
     @Autowired
     private ApplicationRepository ApplicationRepository;
+
+    @Autowired 
+    private AppsAndJobsRepository appsAndJobsRepository;
 
     @GetMapping
     public ResponseEntity<?> getAllApplications() {
@@ -54,16 +59,16 @@ public class ApplicationController {
     //     }
     // }
     
-    @GetMapping("/byJobId/{job_id}")
-    public ResponseEntity<?> getApplicationsByJobId(@PathVariable Long job_id) {
-        List<Application> applicationOptional = ApplicationRepository.findApplicationByJobId(job_id);
+    // @GetMapping("/byJobId/{jobId}")
+    // public ResponseEntity<?> getApplicationsByJobId(@PathVariable Long jobId) {
+    //     List<AppsAndJobs> applicationOptional = appsAndJobsRepository.findApplicationsByJobId(jobId);
 
-        if (!applicationOptional.isEmpty()) {
-            return ResponseEntity.ok(applicationOptional);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Application not found with job id: " + job_id);
-        }
-    }
+    //     if (!applicationOptional.isEmpty()) {
+    //         return ResponseEntity.ok(applicationOptional);
+    //     } else {
+    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Application not found with job id: " + jobId);
+    //     }
+    // }
 
     @PostMapping
     public ResponseEntity<?> addApplication(@RequestBody Application application) {

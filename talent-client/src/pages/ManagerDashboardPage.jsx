@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import DoughnutChart from "../shared-components/DoughnutChart";
 import DataTableManager from "../shared-components/DataTableManager";
 import { GlobalUserContext } from "../App";
-import { getJobsByManagerId } from "../services/apiService";
+import { getJobsByManagerId, getApplicationsByJobID } from "../services/apiService";
 import '../styles/ManagerDashboardPage.css';
 import ManagerJobCreateForm from "../components/ManagerJobCreateForm";
 
@@ -17,7 +17,17 @@ export default function ManagerDashboardPage() {
                 const result = await getJobsByManagerId(globalUser.data.managerId);
                 if (result.statusCode === 200) {
                     setJobs(result.data);
-                    console.log("Jobs set are", jobs);
+                    // Fetch applications for each job
+                const applicationsPromises = result.data.map(job => getApplicationsByJobID(job.jobId));
+                const applicationsResults = await Promise.all(applicationsPromises);
+                // Merge applications with their respective jobs
+                const jobsWithApplications = result.data.map((job, index) => ({
+                    ...job,
+                    applications: applicationsResults[index]
+                }));
+                setJobs(jobsWithApplications);
+
+                console.log("Jobs with applications are", jobsWithApplications);
                 } else {
                     console.error(`Error fetching jobs: ${result.message}`);
                 }

@@ -207,9 +207,9 @@ export async function updateJobListing(data = {}) {
 }
 
 
-export async function getApplicationsByJobID() {
+export async function getApplicationsByJobID(jobId) {
     try {
-        const response = await fetch(`localhost:8080/api/applications/byJobId/${jobs_id}`, {
+        const response = await fetch(`http://localhost:8080/api/appsNjobs/byJobId/${jobId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application.json'
