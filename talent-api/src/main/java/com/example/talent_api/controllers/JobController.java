@@ -68,6 +68,8 @@ public class JobController {
     @PostMapping
     public ResponseEntity<?> addJob(@RequestBody Job job) {
         try {
+            System.out.println(job);
+            System.out.println(job.getJobtitle());
             if (job.getJobtitle() == null || job.getJobtitle().isEmpty()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Data is missing.");
             }
