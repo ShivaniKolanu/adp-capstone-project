@@ -11,7 +11,6 @@ export default function ManagerDashboardPage() {
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
     
-
     const fetchJobs = async () => {
         if (globalUser && globalUser.data && globalUser.data.managerId) {
             try {
@@ -52,13 +51,14 @@ export default function ManagerDashboardPage() {
 
     const data = {
         labels: [
-            'Active Job Applications - Internal',
-            'Active Job Applications - External',
-            'Inactive Job Applications'
+            'Pending',
+            'Reviewed',
+            'Accepted',
+            'Rejected'
         ],
         datasets: [{
             label: 'Job Applications',
-            data: [10, 10, 5], // 10 internal, 10 external, 5 inactive
+            data: [40, 30, 3, 18], // 10 internal, 10 external, 5 inactive
             backgroundColor: [
                 'rgb(255, 159, 64)',  // internal
                 'rgb(255, 99, 132)',  // external
@@ -72,7 +72,7 @@ export default function ManagerDashboardPage() {
         plugins: {
             legend: {
                 position: 'right',
-                align: 'center',
+                // align: 'right',
             }
         }
     };
