@@ -43,7 +43,15 @@ export default function ManagerJobCreateForm(props) {
             setJobDescription('');
             setAdditionalInformation('');
             setListingStatus('');
-            setSuccessAlert(true);
+            setTimeout(() => {
+                setSuccessAlert(true);
+              
+                // Set success alert to false after 2 seconds
+                setTimeout(() => {
+                  setSuccessAlert(false);
+                }, 2000); // 2000 milliseconds = 2 seconds
+              
+              }, 1000); 
             onJobsCreate();
         }
     };

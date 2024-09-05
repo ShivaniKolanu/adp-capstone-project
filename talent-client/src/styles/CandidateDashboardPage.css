@@ -7,3 +7,21 @@
     display: flex;
     justify-content: center;
 }
+
+.dashboard-flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.candidate-chart {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.right-side-div {
+    flex: 1;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+}

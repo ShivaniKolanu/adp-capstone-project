@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { Tab, Tabs } from 'react-bootstrap';
 import CandidateNewAppForm from "./CandidateNewAppForm";
 
-export default function CandidateSearchJobs() {
+export default function CandidateSearchJobs(props) {
+  const {onAppsCreate} = props;
   const [searchJobParam, setSearchJobParam] = useState('');
   const [jobs, setJobs] = useState([]);
   const [isSearchComplete, setIsSearchComplete] = useState(false);
@@ -132,7 +133,7 @@ export default function CandidateSearchJobs() {
             <Tab eventKey="applyTab" title="Apply for Job" disabled={!selectedJob}>
               {selectedJob ? (
                 <div className="tab-pane fade show active" id="applyJobTab">
-                  <CandidateNewAppForm selectedJob={selectedJob} />
+                  <CandidateNewAppForm selectedJob={selectedJob} onAppsCreate = {onAppsCreate} />
                 </div>
               ) : (
                 <div className="alert alert-info">

@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { registerNewUser } from "../services/apiService";
 import { useNavigate } from "react-router-dom";
+import { GlobalUserContext } from "../App";
 
 export default function RegisterComponent(props) {
+    const {globalUser,setGlobalUser} = useContext(GlobalUserContext)
     const [role, setRole] = useState('');
     const [full_name, setFullName] = useState('');
     const [email, setEmail] = useState('');
@@ -32,6 +34,7 @@ export default function RegisterComponent(props) {
             if (result.statusCode === 201) {
                 console.log("Successful", result.message);
                 console.log("Data:", result.data);
+                setGlobalUser(result.data);
                 if (role === 'candidate') {
                     navigate('/candidateDashboard');
                 } else if (role === 'manager') {

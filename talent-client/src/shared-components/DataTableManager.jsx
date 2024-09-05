@@ -20,7 +20,15 @@ export default function DataTableManager(props) {
         setUpdateMessage(response.message || "An error occurred while updating the application status.");
 
         if (response.statusCode === 200) {
-            setSuccessAlert(true);
+            setTimeout(() => {
+                setSuccessAlert(true);
+              
+                // Set success alert to false after 2 seconds
+                setTimeout(() => {
+                  setSuccessAlert(false);
+                }, 2000); // 2000 milliseconds = 2 seconds
+              
+              }, 1000); 
             const updatedJobs = jobs.map(job => {
                 if (job.jobId === selectedJob.jobId) {
                     return {
@@ -71,8 +79,16 @@ export default function DataTableManager(props) {
 
         if (response.statusCode === 200) {
             // Close the modal if update was successful
-            setSuccessAlert(true);
-            onJobsUpdate();
+            setTimeout(() => {
+                setSuccessAlert(true);
+              
+                // Set success alert to false after 2 seconds
+                setTimeout(() => {
+                  setSuccessAlert(false);
+                }, 2000); // 2000 milliseconds = 2 seconds
+              
+              }, 1000);             
+              onJobsUpdate();
         }
     };
 
