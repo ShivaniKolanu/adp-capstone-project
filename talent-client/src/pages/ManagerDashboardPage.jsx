@@ -62,7 +62,8 @@ export default function ManagerDashboardPage() {
             backgroundColor: [
                 'rgb(255, 159, 64)',  // internal
                 'rgb(255, 99, 132)',  // external
-                'rgb(54, 162, 235)'   // inactive
+                'rgb(54, 162, 235)',   // inactive
+                'rgb(58, 16, 25)'
             ],
             hoverOffset: 4
         }]
