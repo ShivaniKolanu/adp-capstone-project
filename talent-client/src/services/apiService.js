@@ -281,3 +281,41 @@ export async function updateApplicationStatus(applicantId, applicationStatus) {
     }
 
 }
+
+export async function addNewJobApplication(data = {}) {
+
+    try {
+
+        const response = await fetch('http://localhost:8080/api/applications', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const isJson = response.headers.get('content-type')?.includes('application/json');
+        const responseData = isJson ? await response.json() : null;
+
+        if (response.ok) {
+            return {
+                statusCode: 201,
+                message: 'Application added successfully.',
+                data: responseData,
+            };
+        } else {
+            return {
+                statusCode: response.status,
+                message: responseData?.message || 'Failed to add the application',
+                data: responseData,
+            };
+        }
+    } catch (err) {
+        return {
+            statusCode: 500,
+            message: `Error: ${err.message}`,
+            data: null,
+        };
+    }
+
+}
