@@ -4,6 +4,7 @@ import DataTableCandidate from "../shared-components/DataTableCandidate";
 import { GlobalUserContext } from "../App";
 import { getApplicationsByUserId } from "../services/apiService";
 import '../styles/CandidateDashboardPage.css';
+import CandidateSearchJobs from "../components/CandidateSearchJobs";
 
 export default function CandidateDashboardPage() {
     const { globalUser } = useContext(GlobalUserContext);
@@ -62,6 +63,19 @@ export default function CandidateDashboardPage() {
             <h4>Candidate Dashboard Page</h4>
             <div className="candidate-chart">
                 <DoughnutChart data={data} options={options} className="chart" />
+            </div>
+
+
+            <div style={{  display: 'flex', justifyContent: 'space-between' }}>
+            <div className="alert alert-info" role="alert" style={{padding: 5}}>
+                Click on a row in order to view/edit job application.
+            </div>
+                <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#searchJobModal" style={{padding: 0}}>Apply for a Job</button>
+
+            </div>
+
+            <div className="modal fade" id="searchJobModal" tabIndex="-1" aria-labelledby="searchJobModalLabel" aria-hidden="true" >
+                <CandidateSearchJobs/>
             </div>
 
             {loading ? (
