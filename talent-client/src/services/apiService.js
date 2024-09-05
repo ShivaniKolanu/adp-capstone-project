@@ -319,3 +319,150 @@ export async function addNewJobApplication(data = {}) {
     }
 
 }
+
+export async function getAllJobs() {
+    try {
+        const response = await fetch(`http://localhost:8080/api/jobs`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application.json'
+            }
+        })
+
+        if (!response.ok) {
+            throw new Error(`HTTP Error : status: ${response.status}`)
+        }
+
+        const data = await response.json();
+        return data;
+
+    } catch (error) {
+        console.error("GET request failed: ", error)
+    }
+}
+
+
+export async function updateJobApplication(data = {}) {
+    try {
+
+        const applicationId = data.applicationId;
+
+        const updateResponse = await fetch(`http://localhost:8080/api/applications/${applicationId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!updateResponse.ok) {
+            throw new Error("Failed to Update Application")
+        }
+        return {
+            statusCode: 200,
+            message: 'Application Updated successfully.',
+            data: await updateResponse.json()
+        };
+    } catch (err) {
+        return err.message;
+    }
+
+}
+
+export async function getCandidate(candidateId) {
+    try {
+        const response = await fetch(`http://localhost:8080/api/candidates/${candidateId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application.json'
+            }
+        })
+
+        if (!response.ok) {
+            throw new Error(`HTTP Error : status: ${response.status}`)
+        }
+
+        const data = await response.json();
+        return data;
+
+    } catch (error) {
+        console.error("GET request failed: ", error)
+    }
+}
+
+
+export async function updateCandidate(data = {}) {
+    try {
+
+        const candidateId = data.candidateId;
+
+        const updateResponse = await fetch(`http://localhost:8080/api/candidates/${candidateId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!updateResponse.ok) {
+            throw new Error("Failed to Update Profile")
+        }
+        return {
+            statusCode: 200,
+            message: 'Profile Updated successfully.',
+            data: await updateResponse.json()
+        };
+    } catch (err) {
+        return err.message;
+    }
+
+}
+
+export async function getManager(managerId) {
+    try {
+        const response = await fetch(`http://localhost:8080/api/manager/${managerId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application.json'
+            }
+        })
+
+        if (!response.ok) {
+            throw new Error(`HTTP Error : status: ${response.status}`)
+        }
+
+        const data = await response.json();
+        return data;
+
+    } catch (error) {
+        console.error("GET request failed: ", error)
+    }
+}
+
+
+export async function updateManager(data = {}) {
+    try {
+
+        const managerId = data.managerId;
+
+        const updateResponse = await fetch(`http://localhost:8080/api/manager/${managerId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!updateResponse.ok) {
+            throw new Error("Failed to Update Profile")
+        }
+        return {
+            statusCode: 200,
+            message: 'Profile Updated successfully.',
+            data: await updateResponse.json()
+        };
+    } catch (err) {
+        return err.message;
+    }
+
+}

@@ -2,14 +2,28 @@ import React, { useContext, useEffect, useState } from "react";
 import DoughnutChart from "../shared-components/DoughnutChart";
 import DataTableManager from "../shared-components/DataTableManager";
 import { GlobalUserContext } from "../App";
-import { getJobsByManagerId, getApplicationsByJobID } from "../services/apiService";
+import { getJobsByManagerId, getApplicationsByJobID, getManager } from "../services/apiService";
 import '../styles/ManagerDashboardPage.css';
 import ManagerJobCreateForm from "../components/ManagerJobCreateForm";
+import ManagerProfile from "../components/ManagerProfile";
 
 export default function ManagerDashboardPage() {
     const { globalUser } = useContext(GlobalUserContext);
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [userData, setUserData] = useState([]);
+
+    const userDataFetch = async () => {
+
+        try {
+            const result = await getManager(globalUser.data.managerId);
+            console.log("User data", result);
+            setUserData(result);
+
+        } catch(err){
+            console.error(err);
+        }
+    };
     
     const fetchJobs = async () => {
         if (globalUser && globalUser.data && globalUser.data.managerId) {
@@ -44,6 +58,7 @@ export default function ManagerDashboardPage() {
     useEffect(() => {        
 
         fetchJobs();
+        userDataFetch();
     }, [globalUser]); // Dependency array adjusted
     const refreshJobs = () => {
         fetchJobs();
@@ -61,9 +76,9 @@ export default function ManagerDashboardPage() {
             data: [40, 30, 3, 18], // 10 internal, 10 external, 5 inactive
             backgroundColor: [
                 'rgb(255, 159, 64)',  // internal
-                'rgb(255, 99, 132)',  // external
+                'rgb(184, 216, 190)',  // external
                 'rgb(54, 162, 235)',   // inactive
-                'rgb(58, 16, 25)'
+                'rgb(255, 99, 132)'
             ],
             hoverOffset: 4
         }]
@@ -81,11 +96,28 @@ export default function ManagerDashboardPage() {
 
     return (
         <div className="managerDashboard-parent">
-            <h4>Manager Dashboard Page</h4>
-            <div className="manager-chart">
+            {/* <h4>Manager Dashboard Page</h4> */}
+            {/* <div className="manager-chart">
                 <DoughnutChart data={data} options={options} className="chart" />
-            </div>
+            </div> */}
+<div className="dashboard-flex-container">
+                {/* Left div */}
+                <div className="left-side-div" style={{marginLeft:60, marginTop: 100}}>
+                    <h1 style={{fontFamily: "'Courier New', Courier, monospace"}}>Hiring <br/> Manager <br/> View</h1>
+                </div>
 
+                {/* Middle div: Doughnut chart */}
+                <div className="candidate-chart middle-div" style={{marginLeft:200}}>
+                    <DoughnutChart data={data} options={options} className="chart" />
+                </div>
+
+                {/* Right div */}
+                <div className="right-side-div" style={{backgroundColor: 'white'}}>
+                {/* <UserProfile userData={userData} /> 
+                               */}
+                    <ManagerProfile userData={userData}/>
+                 </div>
+            </div>
             
 
             <div style={{  display: 'flex', justifyContent: 'space-between' }}>

@@ -2,26 +2,36 @@ import React, { useState, useContext } from "react";
 import { GlobalUserContext } from "../App";
 import { addNewJobApplication } from "../services/apiService";
 
-export default function CandidateNewAppForm({ selectedJob }) {
+export default function CandidateNewAppForm(props) {
+    const { selectedJob, onAppsCreate } = props;
     const { globalUser } = useContext(GlobalUserContext);
 
     const [coverLetter, setCoverLetter] = useState('');
     const [customResume, setCustomResume] = useState('');
     const [successAlert, setSuccessAlert] = useState(false);
-    async function handleSubmitApp(){
+    async function handleSubmitApp() {
         try {
             setSuccessAlert(false);
             const userId = globalUser.data.userId;
             const jobId = selectedJob.jobId;
             const applicationStatus = "pending";
-            const data = {userId, jobId, coverLetter, customResume, applicationStatus};
+            const data = { userId, jobId, coverLetter, customResume, applicationStatus };
 
             const result = await addNewJobApplication(data);
             if (result.statusCode === 201) {
                 console.log("Successful", result.message);
-                setSuccessAlert(true);
+                setTimeout(() => {
+                    setSuccessAlert(true);
+
+                    // Set success alert to false after 2 seconds
+                    setTimeout(() => {
+                        setSuccessAlert(false);
+                    }, 2000); // 2000 milliseconds = 2 seconds
+
+                }, 1000);
                 setCoverLetter('');
                 setCustomResume('');
+                onAppsCreate();
 
 
             } else {
@@ -29,7 +39,7 @@ export default function CandidateNewAppForm({ selectedJob }) {
             }
 
 
-        } catch(err){
+        } catch (err) {
 
             console.error(" error:", err);
 
@@ -73,9 +83,9 @@ export default function CandidateNewAppForm({ selectedJob }) {
                     </div>
 
                 </div>
-                { successAlert && <div className="alert alert-success" role="alert">
-                     Application Created Successfully.
-                    </div>}
+                {successAlert && <div className="alert alert-success" role="alert">
+                    Application Created Successfully.
+                </div>}
             </div>
         </div>
     );
