@@ -5,3 +5,25 @@
 .clickable-row:hover {
     background-color: #eb3232; /* Change this to your desired color */
 }
+
+.table-container {
+    max-height: 400px; /* Adjust height as needed */
+    overflow-y: auto;
+    width: 100%;
+}
+
+.table thead th {
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
+    top: 0;
+    background-color: #f8f9fa; /* Background color to ensure readability */
+    z-index: 1; /* Ensure the header is above the scrolling content */
+}
+
+.table tbody tr {
+    cursor: pointer;
+}
+
+.table tbody td, .table thead th {
+    vertical-align: middle;
+}

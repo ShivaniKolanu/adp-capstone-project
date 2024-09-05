@@ -94,6 +94,7 @@ export default function DataTableManager(props) {
 
     return (
         <>
+         <div className="table-container">
             <table className="table table-striped table-bordered" style={{ width: '100%', marginTop: 10 }}>
                 <thead>
                     <tr>
@@ -124,6 +125,7 @@ export default function DataTableManager(props) {
                     )}
                 </tbody>
             </table>
+            </div>
 
             {/* Modal */}
             <div className="modal fade" id="jobModal" tabIndex="-1" aria-labelledby="jobModalLabel" aria-hidden="true">
