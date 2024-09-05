@@ -37,11 +37,29 @@ export default function LoginComponent(props) {
       } else if(user.statusCode === 404){
         console.error(`User not found with username: ${username}`);
         setUserFlag(true);
+        setTimeout(() => {
+          setUserFlag(true);
+        
+          // Set success alert to false after 2 seconds
+          setTimeout(() => {
+            setUserFlag(false);
+          }, 2000); // 2000 milliseconds = 2 seconds
+        
+        }, 1000); 
+        
         setErrorMessage("User is not found with given username.")
       }
       else{
         console.log("Incorrect password");
-        setPasswordFlag(true);
+        setTimeout(() => {
+          setPasswordFlag(true);
+        
+          // Set success alert to false after 2 seconds
+          setTimeout(() => {
+            setPasswordFlag(false);
+          }, 2000); // 2000 milliseconds = 2 seconds
+        
+        }, 1000); 
         setErrorMessage("Incorrect Password.")
       }
     } catch (err) {
@@ -63,10 +81,12 @@ export default function LoginComponent(props) {
       {
         userFlag && 
           <div class="alert alert-danger" role="alert">
+            User not found!
           </div>
       }
       { passwordFlag && 
           <div class="alert alert-danger" role="alert">
+            Invalid Login Credentials!
           </div>
       }
       <p style={{ fontSize: 30, fontFamily: 'sans-serif', textAlign: 'center' }}> Sign in with
@@ -82,11 +102,11 @@ export default function LoginComponent(props) {
 
       <div className="mb-3">
         <label className="form-label">Username</label>
-        <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} className="form-control" placeholder="Enter your username.." />
+        <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} className="form-control" placeholder="Enter your username.." required />
       </div>
       <div className="mb-3">
         <label className="form-label">Password</label>
-        <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" placeholder="Enter your password.." />
+        <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" placeholder="Enter your password.."  required/>
       </div>
 
       <button type="button" onClick={() => handleLogin()} className="btn btn-primary" style={{ marginBottom: 10 }}>Login</button>
