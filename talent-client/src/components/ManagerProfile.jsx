@@ -49,7 +49,7 @@ export default function ManagerProfile(props){
 
         <div className="container" style={{ marginLeft: 100, borderRadius: 6, maxWidth: 500, marginTop: 70 }}>
 
-            <img src="https://randomuser.me/api/portraits/lego/5.jpg" style={{ maxWidth: 100 }} />
+            <img src="https://randomuser.me/api/portraits/men/75.jpg" style={{ maxWidth: 100 }} />
             <h5 style={{ fontFamily: "'Courier New', Courier, monospace" }}>Welcome, <br />{userData.fullname}</h5>
             <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal">Update Profile</button>
 

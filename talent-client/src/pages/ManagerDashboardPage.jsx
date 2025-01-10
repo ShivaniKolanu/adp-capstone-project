@@ -12,6 +12,10 @@ export default function ManagerDashboardPage() {
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [userData, setUserData] = useState([]);
+    const [pending, setPending] = useState(0);
+    const [reviewed, setReviewed] = useState(0);
+    const [accept, setAccept] = useState(0);
+    const [reject, setReject] = useState(0);
 
     const userDataFetch = async () => {
 
@@ -35,11 +39,34 @@ export default function ManagerDashboardPage() {
                 const applicationsPromises = result.data.map(job => getApplicationsByJobID(job.jobId));
                 const applicationsResults = await Promise.all(applicationsPromises);
                 // Merge applications with their respective jobs
-                const jobsWithApplications = result.data.map((job, index) => ({
-                    ...job,
-                    applications: applicationsResults[index]
-                }));
+                // const jobsWithApplications = result.data.map((job, index) => ({
+                //     ...job,
+                //     applications: applicationsResults[index]
+                // }));
+
+                const statusCounts = { pending: 0, reviewed: 0, accept: 0, reject: 0 };
+                const jobsWithApplications = result.data.map((job, index) => {
+                    const applications = applicationsResults[index];
+
+                    // Count the statuses
+                    applications?.forEach((app) => {
+                        const { applicationStatus } = app;
+                        statusCounts[applicationStatus] = (statusCounts[applicationStatus] || 0) + 1;   
+                    });
+
+                    return {
+                        ...job,
+                        applications,
+                        statusCounts, 
+                    };
+                });
                 setJobs(jobsWithApplications);
+                setPending(jobsWithApplications[0].statusCounts.pending);
+                setReviewed(jobsWithApplications[0].statusCounts.reviewed);
+                setAccept(jobsWithApplications[0].statusCounts.accept);
+                setReject(jobsWithApplications[0].statusCounts.reject);
+
+
 
                 console.log("Jobs with applications are", jobsWithApplications);
                 } else {
@@ -73,7 +100,7 @@ export default function ManagerDashboardPage() {
         ],
         datasets: [{
             label: 'Job Applications',
-            data: [40, 30, 3, 18], // 10 internal, 10 external, 5 inactive
+            data: [pending, reviewed, accept, reject], // 10 internal, 10 external, 5 inactive
             backgroundColor: [
                 'rgb(255, 159, 64)',  // internal
                 'rgb(184, 216, 190)',  // external
